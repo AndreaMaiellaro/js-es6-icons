@@ -124,22 +124,23 @@ const colors = [
 // Creiamo una select con i tipi di icone e usiamola per filtrare le icone
 
 const iconsContainer = $('#icons-container')
-printIcone(icons, iconsContainer);
+const colorArray = colorIcons(icons, colors);
+printIcone(colorArray, iconsContainer);
 
 //funzioni
 
 //popolare container con icone
 function printIcone(iconsArray, container) {
+	console.log(iconsArray);
 
 	iconsArray.forEach((element) => {
-		console.log(element);
 
 		//destuct element
-		const {name, prefix, family} = element;
+		const {name, prefix, family, color} = element;
 
 		const iconElement = `
 		<div class="icon">
-    		<i class="${family} ${prefix}${name} "></i>
+    		<i class="${family} ${prefix}${name}" style="color: ${color};"></i>
     		<div>${name.toUpperCase()}</div>
 		</div
 		`;
@@ -147,4 +148,49 @@ function printIcone(iconsArray, container) {
 		container.append(iconElement);
 	});
 
+}
+
+// funzione per dare alle icone i colori
+
+function colorIcons(colorArray, iconeArrayOriginale) {
+	const iconTypes = getIconsTypes();
+	console.log(iconTypes);
+
+	//map
+	const iconsWithColors = iconeArrayOriginale.map((element) => {
+		const newIconObj = {
+			// name: element.name,
+			// prefix: element.prefix,
+			// type: element.type,
+			// family: element.family,
+			...element
+		};
+
+		const iconTypeIndex = iconTypes.indexOf(newIconObj.type);
+		// console.log(newIconObj.type + ',' + iconTypeIndex);
+
+		if (iconTypeIndex != -1) {
+			newIconObj.color = colorArray[iconTypeIndex];
+		}
+
+		return newIconObj;
+	});
+
+	return iconsWithColors;
+}
+
+
+// array con tipi icone
+function getIconsTypes(iconsArray) {
+	const typesArray = [];
+
+	iconsArray.forEach((element) => {
+		const elementType = element.type;
+
+		if( !typesArray.includes(elementType) ) {
+			typesArray.push(elementType);
+		}
+	});
+
+	return typesArray;
 }
