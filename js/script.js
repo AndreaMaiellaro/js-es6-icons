@@ -152,8 +152,8 @@ function printIcone(iconsArray, container) {
 
 // funzione per dare alle icone i colori
 
-function colorIcons(colorArray, iconeArrayOriginale) {
-	const iconTypes = getIconsTypes();
+function colorIcons(iconeArrayOriginale, colorArray) {
+	const iconTypes = getIconsTypes(iconeArrayOriginale);
 	console.log(iconTypes);
 
 	//map
